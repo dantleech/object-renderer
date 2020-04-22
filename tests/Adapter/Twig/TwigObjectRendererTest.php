@@ -6,6 +6,7 @@ use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ObjectRenderer\Adapter\Twig\TwigObjectRenderer;
+use Phpactor\ObjectRenderer\Model\Exception\CouldNotRenderObject;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\ClassNameTemplateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\TestTemplateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateResolver\FirstExistingFileTemplateResolver;
@@ -68,5 +69,14 @@ class TwigObjectRendererTest extends IntegrationTestCase
             ],
             'hellogoodbye'
         ];
+    }
+
+    public function testThrowsExceptionWhenNoTemplatesAvailable(): void
+    {
+        $this->expectException(CouldNotRenderObject::class);
+        $loader = new ArrayLoader([]);
+        $provider = new TestTemplateProvider([]);
+        $renderer = new TwigObjectRenderer(new Environment($loader), $provider);
+        $renderer->render(new stdClass());
     }
 }

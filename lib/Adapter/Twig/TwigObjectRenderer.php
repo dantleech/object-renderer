@@ -3,6 +3,7 @@
 namespace Phpactor\ObjectRenderer\Adapter\Twig;
 
 use Phpactor\ObjectRenderer\Adapter\Twig\Extension\ObjectRendererExtension;
+use Phpactor\ObjectRenderer\Model\Exception\CouldNotRenderObject;
 use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\ObjectRenderer\Model\TemplateResolver;
@@ -30,17 +31,24 @@ class TwigObjectRenderer implements ObjectRenderer
 
     public function render(object $object): string
     {
-        foreach ($this->templateProvider->resolveFor(get_class($object)) as $template) {
+        $templates = $this->templateProvider->resolveFor(get_class($object));
+
+        foreach ($templates as $template) {
             try {
                 return $this->environment->render(
                     $template,
                     ['object' => $object]
                 );
             } catch (LoaderError $error) {
+                $errors[] = $error->getMessage();
                 continue;
             }
         }
 
-        return '';
+        throw new CouldNotRenderObject(sprintf(
+            'Could not render object "%s" using templates "%s"',
+            get_class($object),
+            implode('", "', $templates)
+        ));
     }
 }

@@ -18,7 +18,7 @@ class SuffixAppendingTemplateProviderTest extends TestCase
               ->willReturn(['Foobar']);
 
         $resolver = new SuffixAppendingTemplateProvider($inner, '.php.twig');
-        self::assertEquals(['Foobar.php.twig'], $resolver->resolveFor(new stdClass()));
+        self::assertEquals(['Foobar.php.twig'], $resolver->resolveFor(stdClass::class));
     }
 
 }

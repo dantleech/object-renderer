@@ -28,7 +28,7 @@ class TwigObjectRenderer implements ObjectRenderer
 
     public function render(object $object): string
     {
-        foreach ($this->templateResolver->resolveFor($object) as $template) {
+        foreach ($this->templateResolver->resolveFor(get_class($object)) as $template) {
             return $this->environment->render($template, [
                 'object' => $object
             ]);

@@ -22,10 +22,10 @@ class SuffixAppendingTemplateProvider implements TemplateCandidateProvider
         $this->suffix = $suffix;
     }
 
-    public function resolveFor(object $object): array
+    public function resolveFor(string $className): array
     {
         return array_map(function (string $template) {
             return sprintf('%s%s', $template, $this->suffix);
-        }, $this->innerResolver->resolveFor($object));
+        }, $this->innerResolver->resolveFor($className));
     }
 }

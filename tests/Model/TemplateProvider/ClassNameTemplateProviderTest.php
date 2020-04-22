@@ -16,7 +16,7 @@ class ClassNameTemplateProviderTest extends IntegrationTestCase
     public function testResolveFromObject(string $stub, array $expected): void
     {
         $object = $this->loadStub($stub);
-        self::assertEquals($expected, (new ClassNameTemplateProvider())->resolveFor($object));
+        self::assertEquals($expected, (new ClassNameTemplateProvider())->resolveFor(get_class($object)));
     }
 
     /**

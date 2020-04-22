@@ -7,5 +7,5 @@ interface TemplateCandidateProvider
     /**
      * @return array<string>
      */
-    public function resolveFor(object $object): array;
+    public function resolveFor(string $className): array;
 }

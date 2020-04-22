@@ -9,8 +9,8 @@ class AncestoralClassTemplateProvider implements TemplateCandidateProvider
     /**
      * {@inheritDoc}
      */
-    public function resolveFor(object $object): string
+    public function resolveFor(object $object): array
     {
-        return '';
+        return [];
     }
 }

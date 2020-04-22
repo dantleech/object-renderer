@@ -15,10 +15,10 @@ class SuffixAppendingTemplateProviderTest extends TestCase
             ->getMock();
         $inner->expects($this->once())
               ->method('resolveFor')
-              ->willReturn('Foobar');
+              ->willReturn(['Foobar']);
 
         $resolver = new SuffixAppendingTemplateProvider($inner, '.php.twig');
-        self::assertEquals('Foobar.php.twig', $resolver->resolveFor(new stdClass()));
+        self::assertEquals(['Foobar.php.twig'], $resolver->resolveFor(new stdClass()));
     }
 
 }

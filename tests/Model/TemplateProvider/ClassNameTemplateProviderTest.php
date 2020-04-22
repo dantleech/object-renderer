@@ -13,7 +13,7 @@ class ClassNameTemplateProviderTest extends IntegrationTestCase
     /**
      * @dataProvider provideResolveFromObject
      */
-    public function testResolveFromObject(string $stub, string $expected): void
+    public function testResolveFromObject(string $stub, array $expected): void
     {
         $object = $this->loadStub($stub);
         self::assertEquals($expected, (new ClassNameTemplateProvider())->resolveFor($object));
@@ -26,12 +26,16 @@ class ClassNameTemplateProviderTest extends IntegrationTestCase
     {
         yield [
             '<?php return new stdClass();',
-            'stdClass'
+            [
+                'stdClass'
+            ]
         ];
 
         yield [
             '<?php namespace Test\Object; class TestObject{} return new TestObject();',
-            'Test/Object/TestObject'
+            [
+                'Test/Object/TestObject'
+            ]
         ];
     }
 }

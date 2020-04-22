@@ -14,7 +14,7 @@ class AncestoralClassProviderTest extends IntegrationTestCase
     /**
      * @dataProvider provideResolveFromObject
      */
-    public function testResolveFromObject(string $stub, string $expected): void
+    public function testResolveFromObject(string $stub, array $expected): void
     {
         $object = $this->loadStub($stub);
         self::assertEquals($expected, (new AncestoralClassTemplateProvider())->resolveFor($object));
@@ -40,7 +40,7 @@ class Two extends One
 return new Two();
 EOT
             ,
-            'two',
+            ['two'],
         ];
     }
 }

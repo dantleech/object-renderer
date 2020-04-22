@@ -15,7 +15,7 @@ class TwigObjectRenderer implements ObjectRenderer
     private $environment;
 
     /**
-     * @var TemplateResolver
+     * @var TemplateCandidateProvider
      */
     private $templateResolver;
 
@@ -28,8 +28,12 @@ class TwigObjectRenderer implements ObjectRenderer
 
     public function render(object $object): string
     {
-        return $this->environment->render($this->templateResolver->resolveFor($object), [
-            'object' => $object
-        ]);
+        foreach ($this->templateResolver->resolveFor($object) as $template) {
+            return $this->environment->render($template, [
+                'object' => $object
+            ]);
+        }
+
+        return '';
     }
 }

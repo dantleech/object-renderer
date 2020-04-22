@@ -7,7 +7,7 @@ use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 class SuffixAppendingTemplateProvider implements TemplateCandidateProvider
 {
     /**
-     * @var TemplateResolver
+     * @var TemplateCandidateProvider
      */
     private $innerResolver;
 
@@ -22,8 +22,10 @@ class SuffixAppendingTemplateProvider implements TemplateCandidateProvider
         $this->suffix = $suffix;
     }
 
-    public function resolveFor(object $object): string
+    public function resolveFor(object $object): array
     {
-        return sprintf('%s%s', $this->innerResolver->resolveFor($object), $this->suffix);
+        return array_map(function (string $template) {
+            return sprintf('%s%s', $template, $this->suffix);
+        }, $this->innerResolver->resolveFor($object));
     }
 }

@@ -6,8 +6,10 @@ use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 
 class ClassNameTemplateProvider implements TemplateCandidateProvider
 {
-    public function resolveFor(object $object): string
+    public function resolveFor(object $object): array
     {
-        return str_replace('\\', '/', get_class($object));
+        return [
+            str_replace('\\', '/', get_class($object))
+        ];
     }
 }

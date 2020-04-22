@@ -18,7 +18,8 @@ class AncestoralClassTemplateProvider implements TemplateCandidateProvider
     }
 
     /**
-     * {@inheritDoc}
+     * @param class-string $className
+     * @return array<string>
      */
     public function resolveFor(string $className): array
     {

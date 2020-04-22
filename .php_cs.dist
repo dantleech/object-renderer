@@ -1,8 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->in('lib')
-    ->in('tests/Integration')
+    ->in('lib');
 ;
 
 return PhpCsFixer\Config::create()

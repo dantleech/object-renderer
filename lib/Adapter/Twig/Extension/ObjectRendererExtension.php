@@ -4,7 +4,6 @@ namespace Phpactor\ObjectRenderer\Adapter\Twig\Extension;
 
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\ExtensionInterface;
 use Twig\TwigFunction;
 
 class ObjectRendererExtension extends AbstractExtension

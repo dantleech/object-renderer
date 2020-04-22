@@ -6,7 +6,6 @@ use Phpactor\ObjectRenderer\Adapter\Twig\Extension\ObjectRendererExtension;
 use Phpactor\ObjectRenderer\Model\Exception\CouldNotRenderObject;
 use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
-use Phpactor\ObjectRenderer\Model\TemplateResolver;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 

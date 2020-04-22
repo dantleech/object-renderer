@@ -20,14 +20,16 @@ class AncestoralClassTemplateProvider implements TemplateCandidateProvider
     /**
      * {@inheritDoc}
      */
-    public function resolveFor(object $object): array
+    public function resolveFor(string $className): array
     {
-        $reflection = new ReflectionClass($object);
+        $reflection = new ReflectionClass($className);
         $list = [$reflection];
         while (false !== $reflection = $reflection->getParentClass()) {
             $list[] = $reflection;
         }
 
-        return array_map(function (ReflectionClass
+        return array_reduce($list, function ($carry, ReflectionClass $class) {
+            return array_merge($carry, $this->innerProvider->resolveFor($class->getName()));
+        }, []);
     }
 }

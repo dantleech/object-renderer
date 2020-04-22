@@ -16,9 +16,9 @@ class AncestoralClassProviderTest extends IntegrationTestCase
      */
     public function testResolveFromObject(string $stub, array $expected): void
     {
-        $this->markTestSkipped();
         $object = $this->loadStub($stub);
-        self::assertEquals($expected, (new AncestoralClassTemplateProvider())->resolveFor($object));
+        $innerProvider = new ClassNameTemplateProvider();
+        self::assertEquals($expected, (new AncestoralClassTemplateProvider($innerProvider))->resolveFor(get_class($object)));
     }
 
     /**

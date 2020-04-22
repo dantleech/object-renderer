@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\ObjectRenderer;
+namespace Phpactor\ObjectRenderer\Model;
 
 interface ObjectRenderer
 {

@@ -46,14 +46,17 @@ class TwigObjectRendererTest extends TestCase
         yield 'render a sub-object from in the template' => [
             function () {
                 $object = new stdClass();
-                $object->foobar = new stdClass();
+                $object->hello = 'hello';
+                $object2 = new stdClass();
+                $object->foobar = $object2;
+                $object2->hello = 'goodbye';
 
                 return $object;
             },
             [
-                'stdClass' => '{{ render(object.foobar) }}'
+                'stdClass' => '{{ object.hello }}{{ render(object.foobar) }}'
             ],
-            'Barfoo'
+            'hellogoodbye'
         ];
     }
 }

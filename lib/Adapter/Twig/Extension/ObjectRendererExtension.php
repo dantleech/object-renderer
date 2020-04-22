@@ -22,7 +22,11 @@ class ObjectRendererExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('render', function (object $object) {
+            new TwigFunction('render', function (?object $object) {
+                if (null === $object) {
+                    return '';
+                }
+
                 return $this->renderer->render($object);
             })
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\ObjectRenderer\Mode;
+namespace Phpactor\ObjectRenderer\Model;
 
 interface TemplateResolver
 {

@@ -1,0 +1,7 @@
+<?php
+
+namespace Test\Object;
+
+class TestObject {}
+
+return new TestObject();

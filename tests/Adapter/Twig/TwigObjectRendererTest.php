@@ -6,23 +6,25 @@ use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ObjectRenderer\Adapter\Twig\TwigObjectRenderer;
-use Phpactor\ObjectRenderer\Mode\TemplateResolver\ClassNameTemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateResolver\ClassNameTemplateResolver;
+use Phpactor\ObjectRenderer\Tests\IntegrationTestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use stdClass;
 
-class TwigObjectRendererTest extends TestCase
+class TwigObjectRendererTest extends IntegrationTestCase
 {
     /**
      * @dataProvider provideRender
      * @param array<string, string> $templates
      */
-    public function testRender(Closure $factory, array $templates, string $expected): void
+    public function testRender(string $stub, array $templates, string $expected): void
     {
+        $object = $this->loadStub($stub);
         $loader = new ArrayLoader($templates);
         $resolver = new ClassNameTemplateResolver();
         $renderer = new TwigObjectRenderer(new Environment($loader), $resolver);
-        self::assertEquals($expected, $renderer->render($factory()));
+        self::assertEquals($expected, $renderer->render($object));
     }
 
     /**
@@ -31,12 +33,7 @@ class TwigObjectRendererTest extends TestCase
     public function provideRender(): Generator
     {
         yield 'render simple object' => [
-            function () {
-                $object = new stdClass();
-                $object->foobar = 'Barfoo';
-
-                return $object;
-            },
+            'SingleObject.php.stub',
             [
                 'stdClass' => '{{ object.foobar }}'
             ],
@@ -44,15 +41,7 @@ class TwigObjectRendererTest extends TestCase
         ];
 
         yield 'render a sub-object from in the template' => [
-            function () {
-                $object = new stdClass();
-                $object->hello = 'hello';
-                $object2 = new stdClass();
-                $object->foobar = $object2;
-                $object2->hello = 'goodbye';
-
-                return $object;
-            },
+            'ComplexObject.php.stub',
             [
                 'stdClass' => '{{ object.hello }}{{ render(object.foobar) }}'
             ],

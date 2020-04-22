@@ -1,0 +1,4 @@
+<?php
+$class = new stdClass();
+$class->foobar = 'Barfoo';
+return $class;

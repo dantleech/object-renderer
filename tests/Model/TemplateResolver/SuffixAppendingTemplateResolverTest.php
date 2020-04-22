@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\ObjectRenderer\Tests\Mode\TemplateResolver;
+namespace Phpactor\ObjectRenderer\Tests\Model\TemplateResolver;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\ObjectRenderer\Mode\TemplateResolver\ClassNameTemplateResolver;
-use Phpactor\ObjectRenderer\Mode\TemplateResolver\SuffixAppendingTemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateResolver\ClassNameTemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateResolver\SuffixAppendingTemplateResolver;
 use stdClass;
 
 class SuffixAppendingTemplateResolverTest extends TestCase

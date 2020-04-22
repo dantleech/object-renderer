@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\ObjectRenderer\Mode\TemplateResolver;
+namespace Phpactor\ObjectRenderer\Model\TemplateResolver;
 
-use Phpactor\ObjectRenderer\Mode\TemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateResolver;
 
 class SuffixAppendingTemplateResolver implements TemplateResolver
 {

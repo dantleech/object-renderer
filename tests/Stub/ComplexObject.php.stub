@@ -1,0 +1,10 @@
+<?php 
+
+$object = new stdClass();
+$object->hello = 'hello';
+$object2 = new stdClass();
+$object->foobar = $object2;
+$object2->hello = 'goodbye';
+
+return $object;
+

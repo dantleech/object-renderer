@@ -3,7 +3,7 @@
 namespace Phpactor\ObjectRenderer\Adapter\Twig;
 
 use Phpactor\ObjectRenderer\Adapter\Twig\Extension\ObjectRendererExtension;
-use Phpactor\ObjectRenderer\Mode\TemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateResolver;
 use Phpactor\ObjectRenderer\ObjectRenderer;
 use Twig\Environment;
 

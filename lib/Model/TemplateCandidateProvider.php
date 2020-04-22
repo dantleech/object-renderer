@@ -2,7 +2,10 @@
 
 namespace Phpactor\ObjectRenderer\Model;
 
-interface TemplateResolver
+interface TemplateCandidateProvider
 {
+    /**
+     * @return array<string>
+     */
     public function resolveFor(object $object): string;
 }

@@ -7,9 +7,11 @@ use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase
 {
-    protected function loadStub(string $name): object
+    protected function loadStub(string $stub): object
     {
-        return require __DIR__ . '/Stub/' . $name;
+        $fname = uniqid();
+        $this->workspace()->put($fname, $stub);
+        return require($this->workspace()->path($fname));
     }
 
     protected function workspace(): Workspace

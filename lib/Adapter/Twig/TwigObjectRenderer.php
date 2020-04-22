@@ -3,7 +3,7 @@
 namespace Phpactor\ObjectRenderer\Adapter\Twig;
 
 use Phpactor\ObjectRenderer\Adapter\Twig\Extension\ObjectRendererExtension;
-use Phpactor\ObjectRenderer\Model\TemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 use Phpactor\ObjectRenderer\ObjectRenderer;
 use Twig\Environment;
 
@@ -19,7 +19,7 @@ class TwigObjectRenderer implements ObjectRenderer
      */
     private $templateResolver;
 
-    public function __construct(Environment $environment, TemplateResolver $templateResolver)
+    public function __construct(Environment $environment, TemplateCandidateProvider $templateResolver)
     {
         $environment->addExtension(new ObjectRendererExtension($this));
         $this->environment = $environment;

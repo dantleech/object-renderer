@@ -1,14 +1,14 @@
 <?php
 
-namespace Phpactor\ObjectRenderer\Tests\Model\TemplateResolver;
+namespace Phpactor\ObjectRenderer\Tests\Model\TemplateProvider;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\ObjectRenderer\Model\TemplateResolver\ClassNameTemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateProvider\ClassNameTemplateProvider;
 use Phpactor\ObjectRenderer\Tests\IntegrationTestCase;
 use stdClass;
 
-class ClassNameTemplateResolverTest extends IntegrationTestCase
+class ClassNameTemplateProviderTest extends IntegrationTestCase
 {
     /**
      * @dataProvider provideResolveFromObject
@@ -16,7 +16,7 @@ class ClassNameTemplateResolverTest extends IntegrationTestCase
     public function testResolveFromObject(string $stub, string $expected): void
     {
         $object = $this->loadStub($stub);
-        self::assertEquals($expected, (new ClassNameTemplateResolver())->resolveFor($object));
+        self::assertEquals($expected, (new ClassNameTemplateProvider())->resolveFor($object));
     }
 
     /**
@@ -25,12 +25,12 @@ class ClassNameTemplateResolverTest extends IntegrationTestCase
     public function provideResolveFromObject(): Generator
     {
         yield [
-            'SingleObject.php.stub',
+            '<?php return new stdClass();',
             'stdClass'
         ];
 
         yield [
-            'NamespacedObject.php.stub',
+            '<?php namespace Test\Object; class TestObject{} return new TestObject();',
             'Test/Object/TestObject'
         ];
     }

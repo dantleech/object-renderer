@@ -6,7 +6,7 @@ use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ObjectRenderer\Adapter\Twig\TwigObjectRenderer;
-use Phpactor\ObjectRenderer\Model\TemplateResolver\ClassNameTemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateProvider\ClassNameTemplateProvider;
 use Phpactor\ObjectRenderer\Tests\IntegrationTestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -20,11 +20,11 @@ class TwigObjectRendererTest extends IntegrationTestCase
      */
     public function testRender(string $stub, array $templates, string $expected): void
     {
-        $object = $this->loadStub($stub);
+        $oect = $this->loadStub($stub);
         $loader = new ArrayLoader($templates);
-        $resolver = new ClassNameTemplateResolver();
+        $resolver = new ClassNameTemplateProvider();
         $renderer = new TwigObjectRenderer(new Environment($loader), $resolver);
-        self::assertEquals($expected, $renderer->render($object));
+        self::assertEquals($expected, $renderer->render($oect));
     }
 
     /**
@@ -32,8 +32,8 @@ class TwigObjectRendererTest extends IntegrationTestCase
      */
     public function provideRender(): Generator
     {
-        yield 'render simple object' => [
-            'SingleObject.php.stub',
+        yield 'render simple oect' => [
+            '<?php $o = new stdClass(); $o->foobar = "Barfoo"; return $o;',
             [
                 'stdClass' => '{{ object.foobar }}'
             ],
@@ -41,7 +41,7 @@ class TwigObjectRendererTest extends IntegrationTestCase
         ];
 
         yield 'render a sub-object from in the template' => [
-            'ComplexObject.php.stub',
+            '<?php $o = new stdClass(); $o->hello = "hello";$o->foobar = new stdClass();$o->foobar->hello="goodbye"; return $o;',
             [
                 'stdClass' => '{{ object.hello }}{{ render(object.foobar) }}'
             ],

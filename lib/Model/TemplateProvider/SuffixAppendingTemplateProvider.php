@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\ObjectRenderer\Model\TemplateResolver;
+namespace Phpactor\ObjectRenderer\Model\TemplateProvider;
 
-use Phpactor\ObjectRenderer\Model\TemplateResolver;
+use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 
-class SuffixAppendingTemplateResolver implements TemplateResolver
+class SuffixAppendingTemplateProvider implements TemplateCandidateProvider
 {
     /**
      * @var TemplateResolver
@@ -16,7 +16,7 @@ class SuffixAppendingTemplateResolver implements TemplateResolver
      */
     private $suffix;
 
-    public function __construct(TemplateResolver $innerResolver, string $suffix)
+    public function __construct(TemplateCandidateProvider $innerResolver, string $suffix)
     {
         $this->innerResolver = $innerResolver;
         $this->suffix = $suffix;

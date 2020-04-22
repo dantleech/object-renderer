@@ -4,6 +4,7 @@ namespace Phpactor\ObjectRenderer\Tests\Model\TemplateProvider;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
+use Phpactor\ObjectRenderer\Model\TemplateProvider\AncestoralClassTemplateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\ClassNameTemplateProvider;
 use Phpactor\ObjectRenderer\Tests\IntegrationTestCase;
 use stdClass;
@@ -25,7 +26,20 @@ class AncestoralClassProviderTest extends IntegrationTestCase
     public function provideResolveFromObject(): Generator
     {
         yield [
-            '<?php return new stdClass();',
+            <<<'EOT'
+<?php
+
+class One
+{
+}
+
+class Two extends One
+{
+}
+
+return new Two();
+EOT
+            ,
             'two',
         ];
     }

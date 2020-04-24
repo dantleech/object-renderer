@@ -9,23 +9,52 @@ Render / pretty print objects using Twig templates.
 - Templates are resolved based on the class hierarchy.
 - Templates can render objects.
 
-Usage
------
+Rendering an Object
+-------------------
 
-File paths are resolved based on the FQN of the object you want to render.
-
-Create an object renderer with the builder:
+Create a renderer and render an object:
 
 ```php
 $renderer = ObjectRendererBuilder::create()
-    ->addTemplatePath('/example/path')
+    ->addTemplatePath('example/path')
     ->build();
+
+$renderer->render(new \stdClass());
 ```
 
-Now, imagine we have the following templates in `/example/path`:
+Will throw an exception:
 
 ```
-# DOMDocument.twig
+Could not render object "stdClass" using templates "stdClass.twig"',
+```
+
+You can guess what you need to do, create `stdClass.twig` in the path given in
+the builder:
+
+```
+# stdClass.twig
+Hello I am a stdClass
+```
+
+Object Properties and Recursive Rendering
+-----------------------------------------
+
+The object is available as `object` in the template.
+
+If the object contains other objects, you can recurisvely render them
+by calling `render(object.anotherObject)`.
+
+Ancestor Class Template Resolution
+----------------------------------
+
+If a template for a given object's class is not found. The renderer will
+try and locate a template for each of the parent classes.
+
+DOMDocument Example
+-------------------
+
+```
+{# DOMDocument.twig #}
 DOMDocument:
 {% for node in object.childNodes %}
     - {{ render(node) }}
@@ -33,7 +62,7 @@ DOMDocument:
 ```
 
 ```
-# DOMElement.twig
+{# DOMElement.twig #}
 Element: "{{ object.nodeName }}"
 {% for attribute in object.attributes %}
       {{ render(attribute) }}
@@ -41,12 +70,11 @@ Element: "{{ object.nodeName }}"
 ```
 
 ```
-# DOMAttr.twig
+{# DOMAttr.twig #}
 {{ object.name }}: {{ object.value }}
 ```
 
-We can then render a any of these elements, for example to render the
-DOMDocument:
+Render them like:
 
 ```php
 $dom = new DOMDocument();
@@ -57,10 +85,14 @@ $child2 = $dom->createElement('child-2');
 $child2->setAttribute('bar', 'foo');
 $dom->appendChild($child2);
 
-$rendered = $renderer->render($dom);
+$renderer = ObjectRendererBuilder::create()
+    ->addTemplatePath('example/path')
+    ->build();
+
+$renderer->render($dom);
 ```
 
-Should yield something like:
+Should return something like:
 
 ```
 DOMDocument:

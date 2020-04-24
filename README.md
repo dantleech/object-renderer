@@ -1,7 +1,7 @@
 Object Renderer
 ===============
 
-[![Build Status](https://travis-ci.org/phpactor/object-renderer.svg?branch=master)](https://travis-ci.org/phpactor/indexer-extension)
+[![Build Status](https://travis-ci.org/dantleech/object-renderer.svg?branch=master)](https://travis-ci.org/dantleech/indexer-extension)
 
 Render / pretty print objects using Twig templates.
 

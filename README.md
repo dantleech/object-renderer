@@ -6,8 +6,15 @@ Object Renderer
 Render / pretty print objects using Twig templates.
 
 - Templates are selected based on the FQN.
-- Templates are resolved based on the class hierarchy.
+- Templates are fallback based on class hierarchy.
 - Templates can render objects.
+
+This library, or ones like it, could be suitable for:
+
+- Pretty print `ReflectionClass` and friends, (e.g. printing formatted
+  documentation in a language server).
+- Building a CMS based on _objects_.
+- Other things.
 
 Rendering an Object
 -------------------

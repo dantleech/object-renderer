@@ -7,6 +7,11 @@ use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase
 {
+    protected function setUp(): void
+    {
+        $this->workspace()->reset();
+    }
+
     protected function loadStub(string $stub): object
     {
         $fname = uniqid();

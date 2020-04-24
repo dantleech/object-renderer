@@ -3,47 +3,69 @@ Object Renderer
 
 [![Build Status](https://travis-ci.org/phpactor/object-renderer.svg?branch=master)](https://travis-ci.org/phpactor/indexer-extension)
 
-Render / pretty print objects.
-
-This library renders objects using Twig. 
+Render / pretty print objects using Twig templates.
 
 - Templates are selected based on the FQN.
 - Templates are resolved based on the class hierarchy.
 - Templates can render objects.
 
-Example
--------
+Usage
+-----
 
-```
-# ReflectionClass.php.twig
-This is class: {{ object.name }}
+File paths are resolved based on the FQN of the object you want to render.
 
-It has methods:
-{% for method in object.methods %}
-    - {{ render(method) }}
-{% endfor %}
-```
+Create an object renderer with the builder:
 
-```
-# ReflectionMethod.php.twig
-{{ object.name }}(): {{ object.returnType }}
+```php
+$renderer = ObjectRendererBuilder::create()
+    ->addTemplatePath('/example/path')
+    ->build();
 ```
 
-```
-$reflection = new ReflectionClass(new Request(200));
-
-// $renderer = ...
-$rendered = $renderer->render($reflection);
-```
-
-Would render something like:
+Now, imagine we have the following templates in `/example/path`:
 
 ```
-This is class: Symfony\HttpFoundation\Request
+# DOMDocument.twig
+DOMDocument:
+{% for node in object.childNodes %}
+    - {{ render(node) }}
+{%- endfor -%}
+```
 
-It has methods:
+```
+# DOMElement.twig
+Element: "{{ object.nodeName }}"
+{% for attribute in object.attributes %}
+      {{ render(attribute) }}
+{%- endfor -%}
+```
 
-- getPathInfo(): string
-- getHeaders(): array
-- ...
+```
+# DOMAttr.twig
+{{ object.name }}: {{ object.value }}
+```
+
+We can then render a any of these elements, for example to render the
+DOMDocument:
+
+```php
+$dom = new DOMDocument();
+$child1 = $dom->createElement('child-1');
+$child1->setAttribute('foo', 'bar');
+$dom->appendChild($child1);
+$child2 = $dom->createElement('child-2');
+$child2->setAttribute('bar', 'foo');
+$dom->appendChild($child2);
+
+$rendered = $renderer->render($dom);
+```
+
+Should yield something like:
+
+```
+DOMDocument:
+    - Element: "child-1"
+      foo: bar
+    - Element: "child-2"
+      bar: foo
 ```

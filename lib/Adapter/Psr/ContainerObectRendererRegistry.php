@@ -15,10 +15,13 @@ class ContainerObectRendererRegistry implements ObjectRendererRegistry
     private $container;
 
     /**
-     * @var array
+     * @var array<string,string>
      */
     private $aliasToServiceMap;
 
+    /**
+     * @param array<string,string> $aliasToServiceMap
+     */
     public function __construct(ContainerInterface $container, array $aliasToServiceMap)
     {
         $this->container = $container;
@@ -33,7 +36,8 @@ class ContainerObectRendererRegistry implements ObjectRendererRegistry
         if (!isset($this->aliasToServiceMap[$name])) {
             throw new ObjectRendererNotFound(sprintf(
                 'Object renderer "%s" not known, known renderers: "%s"',
-                $name, implode('", "', array_keys($this->aliasToServiceMap))
+                $name,
+                implode('", "', array_keys($this->aliasToServiceMap))
             ));
         }
 

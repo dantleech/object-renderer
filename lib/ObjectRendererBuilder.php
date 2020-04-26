@@ -143,7 +143,7 @@ final class ObjectRendererBuilder
     public function enableAncestoralCandidates(): self
     {
         $new = clone $this;
-        $this->enableAncestoralCandidates = true;
+        $new->enableAncestoralCandidates = true;
 
         return $new;
     }
@@ -155,7 +155,7 @@ final class ObjectRendererBuilder
     public function enableInterfaceCandidates(): self
     {
         $new = clone $this;
-        $this->enableInterfaceCandidates = true;
+        $new->enableInterfaceCandidates = true;
 
         return $new;
     }

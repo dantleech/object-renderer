@@ -83,4 +83,15 @@ EOT
 
         self::assertEquals('I am a stdClass', trim($renderer->render(new stdClass())));
     }
+
+    public function testBuilderIsImmutable(): void
+    {
+        $renderer1 = ObjectRendererBuilder::create()
+            ->addTemplatePath(__DIR__ . '/Example');
+
+        $renderer2 = $renderer1
+            ->addTemplatePath(__DIR__ . '/Barfoo');
+
+        self::assertNotEquals($renderer1, $renderer2);
+    }
 }

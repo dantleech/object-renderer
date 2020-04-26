@@ -14,6 +14,11 @@ use Psr\Log\NullLogger;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+/**
+ * Object Renderer builder.
+ *
+ * A new instance of the builder is returned for each modification.
+ */
 final class ObjectRendererBuilder
 {
     /**
@@ -61,9 +66,10 @@ final class ObjectRendererBuilder
      */
     public function setLogger(LoggerInterface $logger): self
     {
-        $this->logger = $logger;
+        $new = clone $this;
+        $new->logger = $logger;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -71,9 +77,10 @@ final class ObjectRendererBuilder
      */
     public function setTemplateSuffix(string $suffix): self
     {
-        $this->suffix = $suffix;
+        $new = clone $this;
+        $new->suffix = $suffix;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -81,9 +88,10 @@ final class ObjectRendererBuilder
      */
     public function addTemplatePath(string $path): self
     {
-        $this->templatePaths[] = $path;
+        $new = clone $this;
+        $new->templatePaths[] = $path;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -98,9 +106,10 @@ final class ObjectRendererBuilder
      */
     public function setEscaping($escaping): self
     {
-        $this->escaping = $escaping;
+        $new = clone $this;
+        $new->escaping = $escaping;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -110,9 +119,10 @@ final class ObjectRendererBuilder
      */
     public function renderEmptyOnNotFound(): self
     {
-        $this->renderEmptyOnNotFound = true;
+        $new = clone $this;
+        $new->renderEmptyOnNotFound = true;
 
-        return $this;
+        return $new;
     }
 
     /**

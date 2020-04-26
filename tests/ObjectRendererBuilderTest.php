@@ -94,4 +94,20 @@ EOT
 
         self::assertNotEquals($renderer1, $renderer2);
     }
+
+    public function testEnableInterfaceCandidates(): void
+    {
+        ObjectRendererBuilder::create()
+            ->enableInterfaceCandidates()
+            ->build();
+        $this->addToAssertionCount(1);
+    }
+
+    public function testEnableAncestoralCandidates(): void
+    {
+        ObjectRendererBuilder::create()
+            ->enableAncestoralCandidates()
+            ->build();
+        $this->addToAssertionCount(1);
+    }
 }

@@ -8,6 +8,7 @@ use Phpactor\ObjectRenderer\Model\ObjectRenderer\TolerantObjectRenderer;
 use Phpactor\ObjectRenderer\Model\TemplateCandidateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\AncestoralClassTemplateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\ClassNameTemplateProvider;
+use Phpactor\ObjectRenderer\Model\TemplateProvider\InterfaceTemplateProvider;
 use Phpactor\ObjectRenderer\Model\TemplateProvider\SuffixAppendingTemplateProvider;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -45,6 +46,16 @@ final class ObjectRendererBuilder
      * @var bool|string|callable
      */
     private $escaping = false;
+
+    /**
+     * @var bool
+     */
+    private $enableAncestoralCandidates = false;
+
+    /**
+     * @var bool
+     */
+    private $enableInterfaceCandidates = false;
 
     private function __construct()
     {
@@ -126,6 +137,30 @@ final class ObjectRendererBuilder
     }
 
     /**
+     * Determine templates from the class of the current object and then the
+     * class of each of its ancestors.
+     */
+    public function enableAncestoralCandidates(): self
+    {
+        $new = clone $this;
+        $this->enableAncestoralCandidates = true;
+
+        return $new;
+    }
+
+    /**
+     * Determine templates from the class of the current object and then the
+     * class of each of its ancestors.
+     */
+    public function enableInterfaceCandidates(): self
+    {
+        $new = clone $this;
+        $this->enableInterfaceCandidates = true;
+
+        return $new;
+    }
+
+    /**
      * Build the object renderer
      */
     public function build(): ObjectRenderer
@@ -160,11 +195,18 @@ final class ObjectRendererBuilder
 
     private function buildTemplateProvider(): TemplateCandidateProvider
     {
-        return new SuffixAppendingTemplateProvider(
-            new AncestoralClassTemplateProvider(
-                new ClassNameTemplateProvider()
-            ),
-            $this->suffix
-        );
+        $provider = new ClassNameTemplateProvider();
+
+        if ($this->enableAncestoralCandidates) {
+            $provider = new AncestoralClassTemplateProvider($provider);
+        }
+
+        if ($this->enableInterfaceCandidates) {
+            $provider = new InterfaceTemplateProvider($provider);
+        }
+
+        $provider = new SuffixAppendingTemplateProvider($provider, $this->suffix);
+
+        return $provider;
     }
 }

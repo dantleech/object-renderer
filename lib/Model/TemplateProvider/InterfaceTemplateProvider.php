@@ -26,7 +26,8 @@ class InterfaceTemplateProvider implements TemplateCandidateProvider
         $reflection = new ReflectionClass($className);
         $list = [$className];
 
-        foreach ($reflection->getInterfaceNames() as $interfaceName) {
+        // order with top interfaces first
+        foreach (array_reverse($reflection->getInterfaceNames()) as $interfaceName) {
             $list[] = $interfaceName;
         }
 

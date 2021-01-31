@@ -3,7 +3,7 @@
     "description": "Render/pretty-print objects",
     "license": "MIT",
     "minimum-stability": "dev",
-    "prefer-stable": false,
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Daniel Leech",
@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "php": "^7.3",
-        "twig/twig": "^2.0|^3.0",
+        "php": "^7.3 || ^8.0",
+        "twig/twig": "^2.0||^3.0",
         "psr/container": "^1.0@dev"
     },
     "require-dev": {

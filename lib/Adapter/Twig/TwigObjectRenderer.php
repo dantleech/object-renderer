@@ -28,7 +28,7 @@ class TwigObjectRenderer implements ObjectRenderer
         $this->templateProvider = $templateProvider;
     }
 
-    public function render(object $object): string
+    public function render(object $object, array $args = []): string
     {
         $templates = $this->templateProvider->resolveFor(get_class($object));
 
@@ -36,10 +36,9 @@ class TwigObjectRenderer implements ObjectRenderer
             try {
                 return $this->environment->render(
                     $template,
-                    ['object' => $object]
+                    ['object' => $object, ...$args]
                 );
             } catch (LoaderError $error) {
-                $errors[] = $error->getMessage();
                 continue;
             }
         }
@@ -47,7 +46,7 @@ class TwigObjectRenderer implements ObjectRenderer
         throw new CouldNotRenderObject(sprintf(
             'Could not render object "%s" using templates "%s"',
             get_class($object),
-            implode('", "', $templates)
+            implode('", "', $templates),
         ));
     }
 }

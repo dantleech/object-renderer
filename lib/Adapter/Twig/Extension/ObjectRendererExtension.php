@@ -18,15 +18,15 @@ class ObjectRendererExtension extends AbstractExtension
         $this->renderer = $renderer;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new TwigFunction('render', function (?object $object) {
+            new TwigFunction('render', function (?object $object, array $args = []) {
                 if (null === $object) {
                     return '';
                 }
 
-                return $this->renderer->render($object);
+                return $this->renderer->render($object, $args);
             })
         ];
     }

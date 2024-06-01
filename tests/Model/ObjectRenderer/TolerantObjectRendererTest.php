@@ -37,7 +37,7 @@ class TolerantObjectRendererTest extends TestCase
     public function testCatchesAndLogsCouldNotRenderObjectErrors(): void
     {
         $object = new \stdClass();
-        $this->innerRenderer->render($object)->willThrow(new CouldNotRenderObject('soz'));
+        $this->innerRenderer->render($object, [])->willThrow(new CouldNotRenderObject('soz'));
 
         $rendered = $this->renderer->render($object);
 

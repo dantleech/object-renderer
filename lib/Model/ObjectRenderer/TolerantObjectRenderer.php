@@ -25,10 +25,10 @@ class TolerantObjectRenderer implements ObjectRenderer
         $this->logger = $logger;
     }
 
-    public function render(object $object): string
+    public function render(object $object, array $args = []): string
     {
         try {
-            return $this->innerRenderer->render($object);
+            return $this->innerRenderer->render($object, $args);
         } catch (CouldNotRenderObject $couldNotRender) {
             $this->logger->warning(sprintf(
                 $couldNotRender->getMessage(),

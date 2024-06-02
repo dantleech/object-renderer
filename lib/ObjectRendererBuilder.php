@@ -57,8 +57,6 @@ final class ObjectRendererBuilder
      */
     private $enableInterfaceCandidates = false;
 
-    private ?Environment $twig = null;
-
     private function __construct()
     {
         $this->logger = new NullLogger();
@@ -94,13 +92,6 @@ final class ObjectRendererBuilder
         $new->suffix = $suffix;
 
         return $new;
-    }
-
-    public function setTwig(Environment $twig): self
-    {
-        $this->twig = $twig;
-
-        return $this;
     }
 
     /**
@@ -193,10 +184,6 @@ final class ObjectRendererBuilder
 
     private function buildTwig(): Environment
     {
-        if ($this->twig) {
-            return $this->twig;
-        }
-
         return new Environment(
             new FilesystemLoader($this->templatePaths),
             [

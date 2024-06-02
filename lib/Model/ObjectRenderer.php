@@ -4,5 +4,8 @@ namespace Phpactor\ObjectRenderer\Model;
 
 interface ObjectRenderer
 {
-    public function render(object $object): string;
+    /**
+     * @param array<mixed> $args
+     */
+    public function render(object $object, array $args = []): string;
 }
